@@ -18,17 +18,10 @@ trait OHLC
      */
     public function organizePairData($datas, $limit=999)
     {
-
-        $ret = [];
-        $ret = [];
-        $ret = [];
-        $ret = [];
-        $ret = [];
-        $ret = [];
-
         $ret = array();
         foreach ($datas as $data) {
-            $ret[$data->bh_exchanges_id]['date'][]   = $data->buckettime;
+            $ret[$data->bh_exchanges_id]['timestamp'][]   = $data->buckettime;
+            $ret[$data->bh_exchanges_id]['date'][]   = gmdate("j-M-y", $data->buckettime);
             $ret[$data->bh_exchanges_id]['low'][]    = $data->low;
             $ret[$data->bh_exchanges_id]['high'][]   = $data->high;
             $ret[$data->bh_exchanges_id]['open'][]   = $data->open;
@@ -63,7 +56,7 @@ trait OHLC
         $connection_name = config('database.default');
         $key = 'recent::'.$pair.'::'.$limit."::$day_data::$hour::$periodSize::$connection_name";
         if(\Cache::has($key)) {
-            //return \Cache::get($key);
+            return \Cache::get($key);
         }
 
         $timeslice = 60;
@@ -113,7 +106,7 @@ trait OHLC
          *  Postgres supports series() mysql does not, timescale has buckets, the others don't etc.
          *  having support for timescaledb is important for the scale of the project.
          *
-         *  none of these queries can be done through our eloquent models unfourtunatly.
+         *  none of these queries can be done through our eloquent models unfortunately.
          */
         if ($connection_name == 'pgsql') {
             if (Config::bowhead_config('TIMESCALEDB')) {
@@ -154,7 +147,7 @@ trait OHLC
                 ROUND((CEILING(UNIX_TIMESTAMP(`created_at`) / $timeslice) * $timeslice)) AS buckettime,
                 round(AVG(bid),11) AS avgbid,
                 round(AVG(ask),11) AS avgask,
-                AVG(basevVolume) AS avgvolume
+                AVG(baseVolume) AS avgvolume
               FROM bh_tickers
               WHERE symbol = '$pair'
               AND UNIX_TIMESTAMP(`created_at`) > ($offset)

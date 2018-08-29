@@ -1,9 +1,16 @@
+UPDATE (4/6/2018) see follow-up: https://medium.com/@joeldg/cryptocurrency-bot-framework-followup-3bc289322fb1
+
+UPDATE (3/15/2018) I'm still here, left my old job, started a new job and been hectic. Work will resume on Bowhead this weekend.
+
+UPDATE (2/8/2018): **COMMANDS ARE PROBABLY BROKE** updated project to Laravel 5.6 and made changes to coinigy data getter.
+
 UPDATE (1/30/2018): **COMMANDS ARE PROBABLY BROKE**, I am still cleaning up from the Bitfinex issues. To summarize, Bitfinex no longer allows accounts from the United States, earlier version of Bowhead was very tied to Bitfinex for data. The recent work is adding Coinigy and CCXT support so Bowhead will work for more than 90 exchanges. I have a full time job a one-year old son, so I have limited time and do as much as I can, so I apologize that it is still being fixed.
 
 CURRENT BOWHEAD ROADMAP:
 1. (currently **20%**) Finish the web main page (initial, graphs, signals and indcators)
 2. Finish the strategy builder page (+ backtesting, strategy stats, stub out sections for future ML articles)
 3. Finish Strategy class.
+   * Add social strategy page, upload your own strategies for the community, download strategies to work with and backtest.
 4. Import all current Bowhead strategies into the new Strategy builder.
    * Add strategy builder hooks to web main page
 5. Finish the web interface arb page (arbitrage matrix)
